@@ -1,4 +1,4 @@
-<?php
+<?php if ( !defined('FRONT_CONTROLLER')) exit('no direct access');
 //This function 'overloads' the autoload functionality built into PHP. Basically, 
 //this 'magic function' allows us to intercept the action that PHP takes when we try to instantiate a class that does not exist.
 function __autoload($className){
