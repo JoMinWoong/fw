@@ -18,7 +18,4 @@ if (defined('ENVIRONMENT')) {
 	}
 }
 
-//TODO : change mode by domain
-
-
-require_once (SERVER_ROOT.'controllers/router.php');
+require_once (SERVER_ROOT.'/common/router.php');

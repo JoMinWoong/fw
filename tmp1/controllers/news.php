@@ -1,4 +1,4 @@
-<?php
+<?php if ( !defined('FRONT_CONTROLLER')) exit('no direct access');
 class News_Controller{
 	public $template = 'news';
 

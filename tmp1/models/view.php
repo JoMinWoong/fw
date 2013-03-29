@@ -1,10 +1,10 @@
-<?php
+<?php if ( !defined('FRONT_CONTROLLER')) exit('no direct access');
 class View_Model{
 	private $data = array();
 	private $render = FALSE;
 	
 	public function __construct($template){
-		$file = SERVER_ROOT.'views/'.strtolower($template).EXE;
+		$file = SERVER_ROOT_PRODUCT.'/views/'.strtolower($template).EXE;
 		if (file_exists($file)) {
 			$this->render = $file;
 		}

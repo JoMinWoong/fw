@@ -1,4 +1,4 @@
-<?php
+<?php if ( !defined('FRONT_CONTROLLER')) exit('no direct access');
 class News_Model{
 	
 	private $articles = array
@@ -21,7 +21,7 @@ class News_Model{
 			'test' => array
 			(
 					'title' => 'Testing' ,
-					'content' => 'get of of ma face suckerr'
+					'content' => 'get off of ma face suckerr'
 			)
 	);
 	
