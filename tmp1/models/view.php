@@ -4,7 +4,7 @@ class View_Model{
 	private $render = FALSE;
 	
 	public function __construct($template){
-		$file = SERVER_ROOT_PRODUCT.'/views/'.strtolower($template).EXE;
+		$file = SERVER_ROOT_PRODUCT.'views/'.strtolower($template).EXE;
 		if (file_exists($file)) {
 			$this->render = $file;
 		}

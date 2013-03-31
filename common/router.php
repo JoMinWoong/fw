@@ -28,13 +28,9 @@ foreach ($parsed as $argument) {
 	
 	$getVars[$valuable] = $value;
 }
-/*
-print "page : $page <br>";
-$vars = print_r($getVars,TRUE);
-print "get :<pre>$vars</pre>";
-*/
+
 //path to the file
-$target = SERVER_ROOT_PRODUCT.'/controllers/'.$getVars['c'].EXE;
+$target = SERVER_ROOT_PRODUCT.'controllers/'.$getVars['c'].EXE;
 
 //get target
 if (file_exists($target)){

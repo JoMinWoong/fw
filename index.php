@@ -18,4 +18,13 @@ if (defined('ENVIRONMENT')) {
 	}
 }
 
+
+
+//include the RainTPL class
+include 'common/raintpl-master/inc/rain.tpl.class.php';
+
+raintpl::configure("base_url", null );
+raintpl::configure("tpl_dir", "common/raintpl-master/tpl/" );
+raintpl::configure("cache_dir", "common/raintpl-master/tmp/" );
+
 require_once (SERVER_ROOT.'/common/router.php');
