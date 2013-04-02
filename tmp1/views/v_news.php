@@ -11,7 +11,7 @@
 </html>
  -->
 <?php 
-
+var_dump($data);
 //initialize a Rain TPL object
 	$tpl = new RainTPL;
 
@@ -45,17 +45,20 @@
         // you can draw the output
         // $tpl->draw( 'page' );
         // or the template output string by setting $return_string = true:
-	$html = $tpl->draw( 'page', $return_string = true );
+        
+		
+		$html = $tpl->draw( 'page', $return_string = true );
 
         // and then draw the output
         echo $html;
 
-        
+        //TODO : ??
         class str{
             function cut($t){
                 return substr($t, 1, 2 );
             }
         }
+        
 
 
 ?>

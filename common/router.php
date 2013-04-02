@@ -2,7 +2,8 @@
 
 function __autoload($className){
 	list($filename,$suffix) = explode('_', $className);
-	$file = SERVER_ROOT_PRODUCT.'models/'.strtolower($filename).EXE;
+	$file = SERVER_ROOT_PRODUCT.'models/m_'.strtolower($filename).EXE;
+	
 	if (file_exists($file)) {
 		include_once ($file);
 	}
@@ -30,7 +31,7 @@ foreach ($parsed as $argument) {
 }
 
 //path to the file
-$target = SERVER_ROOT_PRODUCT.'controllers/'.$getVars['c'].EXE;
+$target = SERVER_ROOT_PRODUCT.'controllers/c_'.$getVars['c'].EXE;
 
 //get target
 if (file_exists($target)){

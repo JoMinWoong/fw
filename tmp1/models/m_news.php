@@ -32,8 +32,6 @@ class News_Model{
 	public function get_article($articleName){
 		
 		$article = $this->articles[$articleName];
-		var_dump($this->articles);
-		echo "<br><br>$articleName<br>";
 		return $article;
 	}
 }
