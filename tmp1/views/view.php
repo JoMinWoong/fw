@@ -1,8 +1,19 @@
 <?php if ( !defined('FRONT_CONTROLLER')) exit('no direct access');
-class View_Model{
+class View{
 	private $data = array();
 	private $render = FALSE;
-	
+
+	//TODO : display page
+	public function draw() {
+		/*
+		$tpl = new RainTPL;
+		//variable assign example
+		$variable = "Hello World2!";
+		$tpl->assign( "variable", $variable );
+		$html = $tpl->draw( 'page', $return_string = true );
+		echo $html;
+		*/
+	}
 	
 	public function __construct($template){
 		$tpl = new RainTPL;
@@ -22,6 +33,11 @@ class View_Model{
 			$this->data = $variable + $this->data;
 		else
 			$this->data[ $variable ] = $value;
+	}
+	
+	//get data to view
+	public function getData(){
+		return $this->data;
 	}
 	
 	public function __destruct(){

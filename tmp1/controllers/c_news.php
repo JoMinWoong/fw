@@ -7,7 +7,7 @@ class News_Controller{
 		$newsModel = new News_Model;
 		$article = $newsModel->get_article($getVars['article']);
 		
-		$view = new View_Model($this->template);
+		$view = new View($this->template);
 		$view->assign('title',	$article['title']);
 		$view->assign('content', $article['content']);
 	}

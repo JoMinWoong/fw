@@ -2,13 +2,26 @@
 
 function __autoload($className){
 	list($filename,$suffix) = explode('_', $className);
-	$file = SERVER_ROOT_PRODUCT.'models/m_'.strtolower($filename).EXE;
-	
+	if ($suffix == 'Model') {
+		$file = SERVER_ROOT_PRODUCT.'models/m_'.strtolower($filename).EXE;
+	}
+	elseif ($suffix == 'View') {
+		$file = SERVER_ROOT_PRODUCT.'views/v_'.strtolower($filename).EXE;
+	}
+	elseif ($className == 'View') {
+		$file = SERVER_ROOT_PRODUCT.'views/'.strtolower($filename).EXE;
+	}
+	elseif ($suffix == 'Controller') {
+		$file = SERVER_ROOT_PRODUCT.'controllers/c_'.strtolower($filename).EXE;
+	}
+	else {
+		$file = SERVER_ROOT_PRODUCT.'common/'.strtolower($filename).EXE;
+	}
 	if (file_exists($file)) {
 		include_once ($file);
 	}
 	else {
-		die($file.' << no file you called in models: - what the fuck??');
+		die($file.' << no file to autoload: - what the fuck??');
 	}
 }
 
