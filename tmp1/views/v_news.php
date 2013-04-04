@@ -11,6 +11,7 @@
 </html>
  -->
 <?php 
+/*
 var_dump($data);
 //initialize a Rain TPL object
 	$tpl = new RainTPL;
@@ -60,5 +61,5 @@ var_dump($data);
         }
         
 
-
+*/
 ?>

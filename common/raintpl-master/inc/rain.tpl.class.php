@@ -254,18 +254,23 @@ class RainTPL{
 	// check if has to compile the template
 	// return true if the template has changed
 	protected function check_template( $tpl_name ){
-
+		//print '<br>'.$tpl_name.'<br>';
 		if( !isset($this->tpl['checked']) ){
 
 			$tpl_basename                       = basename( $tpl_name );														// template basename
-			$tpl_basedir                        = strpos($tpl_name,"/") ? dirname($tpl_name) . '/' : null;						// template basedirectory
-			$this->tpl['template_directory']    = self::$tpl_dir . $tpl_basedir;								// template directory
+			$tpl_basedir                        = strpos($tpl_name,"/")!== false ? dirname($tpl_name) . '/' : null;						// template basedirectory
+			$this->tpl['template_directory']    = $tpl_basedir;								// template directory
 			$this->tpl['tpl_filename']          = $this->tpl['template_directory'] . $tpl_basename . '.' . self::$tpl_ext;	// template filename
 			$temp_compiled_filename             = self::$cache_dir . $tpl_basename . "." . md5( $this->tpl['template_directory'] . serialize(self::$config_name_sum));
 			$this->tpl['compiled_filename']     = $temp_compiled_filename . '.rtpl.php';	// cache filename
 			$this->tpl['cache_filename']        = $temp_compiled_filename . '.s_' . $this->cache_id . '.rtpl.php';	// static cache filename
-                        $this->tpl['checked']               = true;
-                        
+            $this->tpl['checked']               = true;
+
+            //print "<br>  >1>".$tpl_name." << <br>";
+            print_sl($tpl_name);
+           	print_vd($this->tpl);
+
+
 			// if the template doesn't exist and is not an external source throw an error
 			if( self::$check_template_update && !file_exists( $this->tpl['tpl_filename'] ) && !preg_match('/http/', $tpl_name) ){
 				$e = new RainTpl_NotFoundException( 'Template '. $tpl_basename .' not found!' );

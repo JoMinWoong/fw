@@ -2,6 +2,7 @@
 
 function __autoload($className){
 	list($filename,$suffix) = explode('_', $className);
+
 	if ($suffix == 'Model') {
 		$file = SERVER_ROOT_PRODUCT.'models/m_'.strtolower($filename).EXE;
 	}

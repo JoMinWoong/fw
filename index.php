@@ -9,10 +9,14 @@ define('ENVIRONMENT', 'development');
 if (defined('ENVIRONMENT')) {
 	switch (ENVIRONMENT){
 		case 'development':
+			function print_sl($str){echo ' [>> '.$str.' <<]<br>';};
+			function print_vd($obj){$r = rand(); echo "<br>-------------start< $r >------------<br>"; var_dump($obj); echo "<br>-------------end< $r >------------<br>";};
 			error_reporting(E_ALL);
 			ini_set('display_errors','On');
 			break;
 		default: //production
+			function print_sl($str){return false;};
+			function print_vd($obj){return false;};
 			error_reporting(0);
 			break;
 	}
