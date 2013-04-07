@@ -7,9 +7,8 @@ class View{
 	public function draw($assign) {
 		
 		$tpl = new RainTPL;
-
-		//variable assign example
-		$variable = "Hello World2!";
+		
+		
 		$tpl->var = $assign;
 		$html = $tpl->draw( $this->render, $return_string = true );
 		echo $html;

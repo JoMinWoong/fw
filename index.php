@@ -7,10 +7,11 @@ define('EXE','.php');
 define('ENVIRONMENT', 'development');
 
 if (defined('ENVIRONMENT')) {
-	switch (ENVIRONMENT){
+	
+	switch (ENVIRONMENT){//TODO cash off 
 		case 'development':
-			function print_sl($str){echo ' [>> '.$str.' <<]<br>';};
-			function print_vd($obj){$r = rand(); echo "<br>-------------start< $r >------------<br>"; var_dump($obj); echo "<br>-------------end< $r >------------<br>";};
+			function print_sl($str,$title = null){echo '<br> ['.$title.' >> '.$str.' ]<br>';};
+			function print_vd($obj,$title = null){ $t = ($title)?$title:rand();echo '<br>-------------start< '.$t.' >------------<br>'; var_dump($obj); echo '<br>-------------end< '.$t.' >------------<br>';};
 			error_reporting(E_ALL);
 			ini_set('display_errors','On');
 			break;
@@ -23,12 +24,12 @@ if (defined('ENVIRONMENT')) {
 }
 
 
-
+/*
 //include the RainTPL class
 include 'common/raintpl-master/inc/rain.tpl.class.php';
 
 raintpl::configure("base_url", null );
 raintpl::configure("tpl_dir", "common/raintpl-master/tpl/" );
 raintpl::configure("cache_dir", "common/raintpl-master/tmp/" );
-
+*/
 require_once (SERVER_ROOT.'/common/router.php');

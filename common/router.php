@@ -36,6 +36,14 @@ $parsed = explode('&', $request);
 //page
 $product = array_shift($parsed);
 define('SERVER_ROOT_PRODUCT', SERVER_ROOT.$product.'/');
+
+//include the RainTPL class
+include 'common/raintpl-master/inc/rain.tpl.class.php';
+raintpl::configure('base_url', null );
+
+raintpl::configure('tpl_dir', SERVER_ROOT_PRODUCT.'views/tpl/' );
+raintpl::configure('cache_dir', SERVER_ROOT_PRODUCT.'views/tmp/' );
+
 //parse parameters out into $getVars
 $getVars = array();
 foreach ($parsed as $argument) {

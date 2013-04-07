@@ -1,15 +1,15 @@
-<!DOCTYPE html>
+<?php if(!class_exists('raintpl')){exit;}?><!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset=utf-8 />
-<title>{$title}</title>
+<title><?php echo $title;?></title>
 
 <!-- this link will be substituted with the right path : href="THEMES/acid/style.css" -->
-<link href="style.css" type="text/css" rel="stylesheet" >
+<link href="/Library/WebServer/Documents/framework/tmp1/views/tpl/Library/WebServer/Documents/framework/tmp1/views/style.css" type="text/css" rel="stylesheet" >
 </head>
 <body>
 	<!-- this img  will be substituted with the right path : src="THEMES/acid/images.gif" -->			
-	<div id="logo"><a href="http://www.raintpl.com"><img src="img/logo.gif"></a></div>
+	<div id="logo"><a href="http://www.raintpl.com"><img src="/Library/WebServer/Documents/framework/tmp1/views/tpl/Library/WebServer/Documents/framework/tmp1/views/img/logo.gif"></a></div>
 	
         
 	<!-- content -->
@@ -19,37 +19,40 @@
 		<div class="layout">
             
 			<h3>Variable example</h3>
-			{* all code between noparse tags is not compiled *}
-			<tt>variable {noparse}{$variable}{/noparse} = <b>{$variable}</b></tt>
+			
+			<tt>variable {$variable} = <b><?php echo $variable;?></b></tt>
 
 			<br/><br/>
 			<h3>Variable assignment</h3>
-			<tt>assignment {$number=10} and print {$number}</tt>
+			<tt>assignment <?php $number=$this->var['number']=10;?> and print <?php echo $number;?></tt>
 
 			<br/><br/>
 			<h3>Operation with strings</h3>
 	
 			<tt>
-				{$variable . $number}<br/>
-				{$number + 20}
+				<?php echo $variable . $number;?><br/>
+				<?php echo $number + 20;?>
+
 			</tt>
 
 			<br/><br/>
 			<h3>Variable Modifiers</h3>
 			<tt>
-				{$variable|substr:0,7}<br/>
-				a modifier on string: {"hello world"|strtoupper}
+				<?php echo ( substr( $variable, 0,7 ) );?><br/>
+				a modifier on string: <?php echo strtoupper( "hello world" );?>
+
 			</tt>
 
 			<br/><br/>
 			<h3>Global variables</h3>
-			<tt>The variable is declared as global into the PHP {$GLOBALS.global_variable}</tt>
+			<tt>The variable is declared as global into the PHP <?php echo $GLOBALS["global_variable"];?></tt>
 			<br/><br/>
 			
 			<h3>Show all declared variables</h3>
-			To show all declared variable use {noparse}{$template_info}{/noparse}.<br/><br/>
+			To show all declared variable use {$template_info}.<br/><br/>
 			<tt>
-				{$template_info}
+				<?php echo "<pre>"; print_r( $this->var ); echo "</pre>"; ?>
+
 			</tt>
 			<br/><br/>
 
@@ -58,11 +61,11 @@
 		<h2>Constants</h2>
 		<div class="layout">
 			<h3>Constant</h3>
-			<tt>Constant: {#true#}</tt>
+			<tt>Constant: <?php  echo true;?></tt>
 			
 			<br/><br/>
 			<h3>Modier on constant as follow</h3>
-			<tt>Negation of false is true: {PHP_VERSION|round}</tt>
+			<tt>Negation of false is true: <?php echo round( PHP_VERSION );?></tt>
 		</div>
 
 		<h2>Loop example</h2>
@@ -70,9 +73,11 @@
 			<h3>Simple loop example</h3>
 			<tt>
 			<ul>
-			{loop="week"}
-				<li>{$key} = {$value}</li>
-			{/loop}
+			<?php $counter1=-1; if( isset($week) && is_array($week) && sizeof($week) ) foreach( $week as $key1 => $value1 ){ $counter1++; ?>
+
+				<li><?php echo $key1;?> = <?php echo $value1;?></li>
+			<?php } ?>
+
 			</ul>
 			</tt>
 
@@ -82,9 +87,11 @@
 			<tt>
 			<ul>
 				<li>ID _ Name _ Color</li>
-				{loop="user"}
-					<li class="color{$counter%2+1}">{$key}) - {$value.name|strtoupper} - {$value.color}</li>
-				{/loop}
+				<?php $counter1=-1; if( isset($user) && is_array($user) && sizeof($user) ) foreach( $user as $key1 => $value1 ){ $counter1++; ?>
+
+					<li class="color<?php echo $counter1%2+1;?>"><?php echo $key1;?>) - <?php echo strtoupper( $value1["name"] );?> - <?php echo $value1["color"];?></li>
+				<?php } ?>
+
 			</ul>
 			</tt>
 			
@@ -93,11 +100,14 @@
 			<h3>Loop an empty array</h3>
 			<tt>
 			<ul>
-				{loop="empty_array"}
-					<li class="color{$counter%2+1}">{$key}) - {$value.name} - {$value.color}</li>
-				{else}
+				<?php $counter1=-1; if( isset($empty_array) && is_array($empty_array) && sizeof($empty_array) ) foreach( $empty_array as $key1 => $value1 ){ $counter1++; ?>
+
+					<li class="color<?php echo $counter1%2+1;?>"><?php echo $key1;?>) - <?php echo $value1["name"];?> - <?php echo $value1["color"];?></li>
+				<?php }else{ ?>
+
 					<b>The array is empty</b>
-				{/loop}
+				<?php } ?>
+
 			</ul>
 			</tt>
 
@@ -108,37 +118,39 @@
 		
 			<h3>simple if example</h3>
 			<tt>
-			{if="$number==10"}OK!
-			{else}NO!{/if}
+			<?php if( $number==10 ){ ?>OK!
+			<?php }else{ ?>NO!<?php } ?>
+
 			</tt>
 			
 			<br/><br/>
 			
 			<h3>example of if, elseif, else example</h3>
 			<tt>
-			{if="substr($variable,0,1)=='A'"}First character is A
-			{elseif="substr($variable,0,1)=='B'"}First character is B
-			{else}First character of variable is not A neither B
-			{/if}
+			<?php if( substr($variable,0,1)=='A' ){ ?>First character is A
+			<?php }elseif( substr($variable,0,1)=='B' ){ ?>First character is B
+			<?php }else{ ?>First character of variable is not A neither B
+			<?php } ?>
+
 			</tt>
 			<br/><br/>
 			
 			<h3>use of ? : operator (number==10?'OK!':'no')</h3>
 			You can also use the ? operator instead of if
-			<tt>{$number==10? 'OK!' : 'no'}</tt>
+			<tt><?php echo $number==10? 'OK!' : 'no';?></tt>
 			
 		</div>
 		
 		<h2>Include_Example</h2>
 		<div class="layout">
 			<h3>Example of include file</h3>
-			<tt>{include="test"}</tt>
+			<tt><?php $tpl = new RainTPL;$tpl->assign( $this->var );$tpl->draw( "test" );?></tt>
 		</div>
 
 		<h2>External_Include Example</h2>
 		<div class="layout">
 			<h3>Example of include file</h3>
-			<tt>{include="http://www.phpcomparison.net/graph/pie.php?template[dwoo]=on&template[openpowertemplate]=on&template[php]=on&template[raintpl]=on&template[savant]=on&template[smarty]=on&template[twig]=on&test=assign"}</tt>
+			<tt></tt>
                         <br>Yes, Rain is fast and light, so <a href="http://phpcomparison.net">click here if you want to see the complete speed test</a>
 		</div>
 		
@@ -146,7 +158,7 @@
 		<h2>Functions</h2>
 		<div class="layout">
 			<h3>Example of function: ucfirst(strtolower($title))</h3>
-			<tt>{function="ucfirst(strtolower($title))"}</tt>
+			<tt><?php echo ucfirst(strtolower($title)); ?></tt>
 		</div>
 		
 		<h2>Path Replace (WYSIWYG)</h2>
@@ -161,7 +173,7 @@
 			into the template the image is wrote as:
 			<code>&lt;img src="img/logo.gif" alt="logo"/&gt;</code>
 			in the compiled template the path is replaced with the correct path <b>tpl/img/logo.gif</b>:<br/>
-			<img src="img/logo.gif" alt="logo"/>
+			<img src="/Library/WebServer/Documents/framework/tmp1/views/tpl/Library/WebServer/Documents/framework/tmp1/views/img/logo.gif" alt="logo"/>
 			<br/><br/><br/>
             <a href="javascript:alert('Javascript is not replaced');">RainTpl is javascript friendly</a>
 			<b>Absolute paths and path ending with # are not replaced</b>
@@ -172,7 +184,7 @@
 
 	</div>
 	
-	<div id="footer">{$copyright}</div>
+	<div id="footer"><?php echo $copyright;?></div>
 
 </body>
 </html>

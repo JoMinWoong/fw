@@ -55,6 +55,7 @@ class RainTPL{
 		 * @var unknown_type
 		 */
 		static $path_replace = true;
+		//static $path_replace = false;
 
 
 		/**
@@ -158,7 +159,7 @@ class RainTPL{
 	 */
 
 	function draw( $tpl_name, $return_string = false ){
-
+		print_sl($tpl_name,'draw');
 		try {
 			// compile the template if necessary and set the template filepath
 			$this->check_template( $tpl_name );
@@ -254,7 +255,7 @@ class RainTPL{
 	// check if has to compile the template
 	// return true if the template has changed
 	protected function check_template( $tpl_name ){
-		//print '<br>'.$tpl_name.'<br>';
+		
 		if( !isset($this->tpl['checked']) ){
 
 			$tpl_basename                       = basename( $tpl_name );														// template basename
@@ -266,13 +267,15 @@ class RainTPL{
 			$this->tpl['cache_filename']        = $temp_compiled_filename . '.s_' . $this->cache_id . '.rtpl.php';	// static cache filename
             $this->tpl['checked']               = true;
 
-            //print "<br>  >1>".$tpl_name." << <br>";
-            print_sl($tpl_name);
+            print_sl($tpl_name,'tpl_name');
+            print_sl(self::$cache_dir);
            	print_vd($this->tpl);
 
 
 			// if the template doesn't exist and is not an external source throw an error
 			if( self::$check_template_update && !file_exists( $this->tpl['tpl_filename'] ) && !preg_match('/http/', $tpl_name) ){
+				
+				print_sl($this->tpl['tpl_filename'],'13');
 				$e = new RainTpl_NotFoundException( 'Template '. $tpl_basename .' not found!' );
 				throw $e->setTemplateFile($this->tpl['tpl_filename']);
 			}
@@ -306,7 +309,6 @@ class RainTPL{
 	 */
 	protected function compileFile( $tpl_basename, $tpl_basedir, $tpl_filename, $cache_dir, $compiled_filename ){
 
-		//read template file
 		$this->tpl['source'] = $template_code = file_get_contents( $tpl_filename );
 
 		//xml substitution
@@ -425,22 +427,23 @@ class RainTPL{
 
 			//include tag
 			elseif( preg_match( '/\{include="([^"]*)"(?: cache="([^"]*)"){0,1}\}/', $html, $code ) ){
+				die('what da fuck!!!!!!!');
 				if (preg_match("/http/", $code[1])) {
+					//TODO NW
 					$content = file_get_contents($code[1]);
 					$compiled_code .= $content;
 				} else {
 					//variables substitution
 					$include_var = $this->var_replace( $code[ 1 ], $left_delimiter = null, $right_delimiter = null, $php_left_delimiter = '".' , $php_right_delimiter = '."', $loop_level );
+                    //get the folder of the actual template
+                    $actual_folder = substr( $this->tpl['template_directory'], strlen(self::$tpl_dir) );
 
-                                        //get the folder of the actual template
-                                        $actual_folder = substr( $this->tpl['template_directory'], strlen(self::$tpl_dir) );
+                    //get the included template
+                    $include_template = $actual_folder . $include_var;
 
-                                        //get the included template
-                                        $include_template = $actual_folder . $include_var;
-
-                                        // reduce the path
-                                        $include_template = $this->reduce_path( $include_template );
-
+                    // reduce the path
+                    $include_template = $this->reduce_path( $include_template );
+					print_vd($this->tpl,'TPL');
 					// if the cache is active
 					if( isset($code[ 2 ]) ){
 
@@ -664,6 +667,7 @@ class RainTPL{
 			if( in_array( "link", self::$path_replace_list ) ){
 				$exp = array_merge( $exp , array( '/<link(.*?)href=(?:")(http|https)\:\/\/([^"]+?)(?:")/i', '/<link(.*?)href=(?:")([^"]+?)#(?:")/i', '/<link(.*?)href="(.*?)"/', '/<link(.*?)href=(?:\@)([^"]+?)(?:\@)/i' ) );
 				$sub = array_merge( $sub , array( '<link$1href=@$2://$3@', '<link$1href=@$2@' , '<link$1href="' . $path . '$2"', '<link$1href="$2"' ) );
+
 			}
 
 			if( in_array( "a", self::$path_replace_list ) ){

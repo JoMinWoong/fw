@@ -4,7 +4,7 @@ class News_Model{
 	function getData($p_queryData){
 		
 		//variable assign example
-		$variable = "Hello World2!";
+		$variable = "Hello World3!!!";
 		$this->assign( "variable", $variable );
 	
 		//loop example
