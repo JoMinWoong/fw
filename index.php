@@ -12,6 +12,7 @@ if (defined('ENVIRONMENT')) {
 		case 'development':
 			function print_sl($str,$title = null){echo '<br> ['.$title.' >> '.$str.' ]<br>';};
 			function print_vd($obj,$title = null){ $t = ($title)?$title:rand();echo '<br>-------------start< '.$t.' >------------<br>'; var_dump($obj); echo '<br>-------------end< '.$t.' >------------<br>';};
+			function print_die($str,$title = null){echo '<br> ['.$title.' >die> '.$str.' ]';die();};
 			error_reporting(E_ALL);
 			ini_set('display_errors','On');
 			break;
