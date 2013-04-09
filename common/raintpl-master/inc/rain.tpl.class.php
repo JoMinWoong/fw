@@ -54,8 +54,8 @@ class RainTPL{
 		 *
 		 * @var unknown_type
 		 */
-		static $path_replace = true;
-		//static $path_replace = false;
+		//static $path_replace = true;
+		static $path_replace = false;
 
 
 		/**
@@ -159,7 +159,6 @@ class RainTPL{
 	 */
 
 	function draw( $tpl_name, $return_string = false ){
-		print_sl($tpl_name,'draw');
 		try {
 			// compile the template if necessary and set the template filepath
 			$this->check_template( $tpl_name );
@@ -428,7 +427,7 @@ class RainTPL{
 			//include tag
 			elseif( preg_match( '/\{include="([^"]*)"(?: cache="([^"]*)"){0,1}\}/', $html, $code ) ){
 				//print_vd($this->tpl,'new');
-				
+
 				if (preg_match("/http/", $code[1])) {
 					$content = file_get_contents($code[1]);
 					$compiled_code .= $content;
@@ -673,6 +672,8 @@ class RainTPL{
 			}
 
 			if( in_array( "link", self::$path_replace_list ) ){
+				//TODO
+				//print_die($path,'link1');
 				$exp = array_merge( $exp , array( '/<link(.*?)href=(?:")(http|https)\:\/\/([^"]+?)(?:")/i', '/<link(.*?)href=(?:")([^"]+?)#(?:")/i', '/<link(.*?)href="(.*?)"/', '/<link(.*?)href=(?:\@)([^"]+?)(?:\@)/i' ) );
 				$sub = array_merge( $sub , array( '<link$1href=@$2://$3@', '<link$1href=@$2@' , '<link$1href="' . $path . '$2"', '<link$1href="$2"' ) );
 

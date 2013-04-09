@@ -4,7 +4,7 @@ define('SERVER_ROOT',str_replace(FRONT_CONTROLLER, '', $_SERVER[SCRIPT_FILENAME]
 define('SITE_ROOT','sv2.sctv-test.net');
 define('EXE','.php');
 
-define('ENVIRONMENT', 'development');
+define('ENVIRONMENT', 'getsysdata');
 
 if (defined('ENVIRONMENT')) {
 	
@@ -16,10 +16,22 @@ if (defined('ENVIRONMENT')) {
 			error_reporting(E_ALL);
 			ini_set('display_errors','On');
 			break;
-		default: //production
-			function print_sl($str){return false;};
-			function print_vd($obj){return false;};
+		case 'getsysdata':
+			include_once (SERVER_ROOT.'/common/library/log.php');
+			
+			//TODO : create array of library instances
+			function print_sl($str,$title = null){general($str,$title);};
+			function print_vd($obj,$title = null){general($str,$title);};
+			function print_die($str,$title = null){general($str,$title);};
+			error_reporting(E_ALL);
+			ini_set('display_errors','on');
+			break;
+		default: //release mode
+			function print_sl($str,$title = null){return false;};
+			function print_vd($obj,$title = null){return false;};
+			function print_die($str,$title = null){return false;};
 			error_reporting(0);
+			ini_set('display_errors','off');
 			break;
 	}
 }
