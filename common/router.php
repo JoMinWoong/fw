@@ -1,24 +1,34 @@
 <?php if ( !defined('FRONT_CONTROLLER')) exit('no direct access');
 
+//This method is invoked each time a class is used which has not yet been define
 function __autoload($className){
+	
+	if ($className == 'View') {
+		$file = SERVER_ROOT_PRODUCT.'view/'.strtolower($className).EXE;
+	}
+/*
 	list($filename,$suffix) = explode('_', $className);
 
 	if ($suffix == 'Model') {
-		$file = SERVER_ROOT_PRODUCT.'models/m_'.strtolower($filename).EXE;
+		$file = SERVER_ROOT_PRODUCT.'model/m_'.strtolower($filename).EXE;
 	}
 	elseif ($suffix == 'View') {
-		$file = SERVER_ROOT_PRODUCT.'views/v_'.strtolower($filename).EXE;
+		$file = SERVER_ROOT_PRODUCT.'view/v_'.strtolower($filename).EXE;
 	}
 	elseif ($className == 'View') {
-		$file = SERVER_ROOT_PRODUCT.'views/'.strtolower($filename).EXE;
+		$file = SERVER_ROOT_PRODUCT.'view/'.strtolower($filename).EXE;
 	}
 	elseif ($suffix == 'Controller') {
-		$file = SERVER_ROOT_PRODUCT.'controllers/c_'.strtolower($filename).EXE;
+		$file = SERVER_ROOT_PRODUCT.'controller/c_'.strtolower($filename).EXE;
 	}
 	else {
 		$file = SERVER_ROOT_PRODUCT.'common/'.strtolower($filename).EXE;
 	}
 	if (file_exists($file)) {
+		require_once ($file);
+	}
+*/
+	if (file_exists($file) && !class_exists($class_name)) {
 		require_once ($file);
 	}
 	else {
@@ -41,8 +51,8 @@ define('SERVER_ROOT_PRODUCT', SERVER_ROOT.$product.'/');
 include 'common/raintpl-master/inc/rain.tpl.class.php';
 raintpl::configure('base_url', null );
 
-raintpl::configure('tpl_dir', SERVER_ROOT_PRODUCT.'views/tpl/' );
-raintpl::configure('cache_dir', SERVER_ROOT_PRODUCT.'views/tmp/' );
+raintpl::configure('tpl_dir', SERVER_ROOT_PRODUCT.'view/tpl/' );
+raintpl::configure('cache_dir', SERVER_ROOT_PRODUCT.'view/tmp/' );
 
 //parse parameters out into $getVars
 $getVars = array();
@@ -53,7 +63,7 @@ foreach ($parsed as $argument) {
 }
 
 //path to the file
-$target = SERVER_ROOT_PRODUCT.'controllers/c_'.$getVars['c'].EXE;
+$target = SERVER_ROOT_PRODUCT.'controller/c_'.$getVars['c'].EXE;
 
 //get target
 if (file_exists($target)){

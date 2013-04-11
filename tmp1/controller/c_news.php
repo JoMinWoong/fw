@@ -3,7 +3,9 @@ class News_Controller{
 	public $template = 'news';
 
 	public function main(array $getVars){
-		$newsModel = new News_Model;
+		//$newsModel = new News_Model;
+		$newsModel = getClass('news','model');
+		//getClass('news','model');
 		$view = new View($this->template);
 		
 		$article = $newsModel->getData($getVars['article']);

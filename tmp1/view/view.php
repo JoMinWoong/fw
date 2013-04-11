@@ -17,9 +17,9 @@ class View{
 	
 	public function __construct($template){
 
-		$file = SERVER_ROOT_PRODUCT.'views/v_'.strtolower($template).'.html';
+		$file = SERVER_ROOT_PRODUCT.'view/v_'.strtolower($template).'.html';
 		if (file_exists($file)) {
-			$this->render = SERVER_ROOT_PRODUCT.'views/v_'.strtolower($template);
+			$this->render = SERVER_ROOT_PRODUCT.'view/v_'.strtolower($template);
 		}
 		else {
 			die('no viewfile to render - no need to talk');

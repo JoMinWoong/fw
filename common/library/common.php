@@ -7,6 +7,19 @@ if (!function_exists('getClass')) {
 		static $classes = array();
 		if ($directory == 'module') {
 			$class_name = 'M_'.$class;
+			$class_file = SERVER_ROOT.'common/'.$directory.'/'.$class.EXE;
+		}
+		else if ($directory == 'library') {
+			$class_name = 'L_'.$class;
+			$class_file = SERVER_ROOT.'common/'.$directory.'/'.$class.EXE;
+		}
+		else if ($directory == 'model') {
+			$class_name = ucfirst($class).'_Model';
+			$class_file = SERVER_ROOT_PRODUCT.$directory.'/m_'.$class.EXE;
+		}
+		else if ($directory == 'controller') {
+			$class_name = ucfirst($class).'_Controller';
+			$class_file = SERVER_ROOT_PRODUCT.$directory.'/c_'.$class.EXE;
 		}
 		else {
 			$class_name = $class;
@@ -14,15 +27,14 @@ if (!function_exists('getClass')) {
 		if (isset($classes[$class_name])) {
 			return $classes[$class_name];
 		}
-		if (file_exists(SERVER_ROOT.'common/'.$directory.'/'.$class.EXE)) {
-			if (!class_exists($class_name)) require_once (SERVER_ROOT.'common/'.$directory.'/'.$class.EXE);
+		if (file_exists($class_file)) {
+			if (!class_exists($class_name)) require_once ($class_file);
 		}
 		else {
 			die('no class file - get the fuck out of here');
 		}
 
 		$classes[$class_name] = new $class_name();
-		var_dump($classes[$class_name]->general());
 		return $classes[$class_name];
 		
 	}
