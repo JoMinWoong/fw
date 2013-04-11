@@ -1,11 +1,10 @@
 <?php
-define('FRONT_CONTROLLER','index.php');
+define('FRONT_CONTROLLER',pathinfo(__FILE__, PATHINFO_BASENAME));
 define('SERVER_ROOT',str_replace(FRONT_CONTROLLER, '', $_SERVER[SCRIPT_FILENAME]));
 define('SITE_ROOT','sv2.sctv-test.net');
 define('EXE','.php');
-
-define('ENVIRONMENT', 'getsysdata');
-
+define('ENVIRONMENT', 'development');
+require_once (SERVER_ROOT.'/common/library/common.php');
 if (defined('ENVIRONMENT')) {
 	
 	switch (ENVIRONMENT){//TODO cash off 
@@ -14,15 +13,14 @@ if (defined('ENVIRONMENT')) {
 			function print_vd($obj,$title = null){ $t = ($title)?$title:rand();echo '<br>-------------start< '.$t.' >------------<br>'; var_dump($obj); echo '<br>-------------end< '.$t.' >------------<br>';};
 			function print_die($str,$title = null){echo '<br> ['.$title.' >die> '.$str.' ]';die();};
 			error_reporting(E_ALL);
-			ini_set('display_errors','On');
+			ini_set('display_errors','on');
 			break;
 		case 'getsysdata':
-			include_once (SERVER_ROOT.'/common/library/log.php');
 			
 			//TODO : create array of library instances
-			function print_sl($str,$title = null){general($str,$title);};
-			function print_vd($obj,$title = null){general($str,$title);};
-			function print_die($str,$title = null){general($str,$title);};
+			function print_sl($str,$title = null){$m_log =& getClass('log','module'); };
+			function print_vd($obj,$title = null){$m_log =& getClass('log','module'); };
+			function print_die($str,$title = null){$m_log =& getClass('log','module'); };
 			error_reporting(E_ALL);
 			ini_set('display_errors','on');
 			break;

@@ -4,8 +4,8 @@ class News_Model{
 	function getData($p_queryData){
 		
 		//variable assign example
-		$variable = "Hello World!!!";
-		$this->assign( "variable", $variable );
+		$variable = 'Hello World!!!';
+		$this->assign( 'variable', $variable );
 	
 		//loop example
 		$week = array( 'Monday', 'Tuersday', 'Wednesday', 'Friday', 'Saturday', 'Sunday' );

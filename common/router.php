@@ -19,10 +19,10 @@ function __autoload($className){
 		$file = SERVER_ROOT_PRODUCT.'common/'.strtolower($filename).EXE;
 	}
 	if (file_exists($file)) {
-		include_once ($file);
+		require_once ($file);
 	}
 	else {
-		die($file.' << no file to autoload: - what the fuck??');
+		//die($file.' << no file to autoload: - what the fuck??');
 	}
 }
 
