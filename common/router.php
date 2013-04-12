@@ -1,9 +1,17 @@
 <?php if ( !defined('FRONT_CONTROLLER')) exit('no direct access');
 
-//This method is invoked each time a class is used which has not yet been define
+/**
+ * This method is invoked each time a class is used which has not yet been define
+ * @param string $className
+ */
 function __autoload($className){
 
-	if ($className == 'View') {
+	list($filename,$suffix) = explode('_', $className);
+	
+	if ($suffix == 'View') {
+		$file = SERVER_ROOT_PRODUCT.'view/v_'.strtolower($filename).EXE;
+	}
+	else if ($className == 'View') {
 		$file = SERVER_ROOT_PRODUCT.'view/'.strtolower($className).EXE;
 	}
 /*
@@ -28,7 +36,7 @@ function __autoload($className){
 		require_once ($file);
 	}
 */
-	if (file_exists($file) && !class_exists($className)) {
+	if (@file_exists($file) && !@class_exists($className)) {
 		require_once ($file);
 	}
 	else {
@@ -66,14 +74,15 @@ foreach ($parsed as $argument) {
 	$getVars[$valuable] = $value;
 }
 
+$controller_name = ($getVars['c'])?$getVars['c']:'';
 //path to the file
-$target = SERVER_ROOT_PRODUCT.'controller/c_'.$getVars['c'].EXE;
+$target = SERVER_ROOT_PRODUCT.'controller/c_'.$controller_name.EXE;
 
 //get target
 if (file_exists($target)){
 	include_once ($target);
 	
-	$class = ucfirst($getVars['c']).'_Controller';
+	$class = ucfirst($controller_name).'_Controller';
 	if (class_exists($class)) {
 		$controller = new $class;
 	}
