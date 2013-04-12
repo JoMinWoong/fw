@@ -1,5 +1,5 @@
 <?php if ( !defined('FRONT_CONTROLLER')) exit('no direct access');
-class News_Model{
+class Product2_Model{
 	private $var = array();
 	function getData($p_queryData){
 		

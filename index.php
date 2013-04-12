@@ -11,7 +11,7 @@ if (defined('ENVIRONMENT')) {
 		case 'development':
 			function print_sl($str,$title = null){echo '<br> ['.$title.' >> '.$str.' ]<br>';};
 			function print_vd($obj,$title = null){ $t = ($title)?$title:rand();echo '<br>-------------start< '.$t.' >------------<br>'; var_dump($obj); echo '<br>-------------end< '.$t.' >------------<br>';};
-			function print_die($str,$title = null){echo '<br> ['.$title.' >die> '.$str.' ]';die();};
+			function print_d($str,$title = null){echo '<br> ['.$title.' >die> '.$str.' ]';die();};
 			error_reporting(E_ALL);
 			ini_set('display_errors','on');
 			break;
@@ -20,14 +20,14 @@ if (defined('ENVIRONMENT')) {
 			//TODO : create array of library instances
 			function print_sl($str,$title = null){$m_log =& getClass('log','module'); };
 			function print_vd($obj,$title = null){$m_log =& getClass('log','module'); };
-			function print_die($str,$title = null){$m_log =& getClass('log','module'); };
+			function print_d($str,$title = null){$m_log =& getClass('log','module'); };
 			error_reporting(E_ALL);
 			ini_set('display_errors','on');
 			break;
 		default: //release mode
 			function print_sl($str,$title = null){return false;};
 			function print_vd($obj,$title = null){return false;};
-			function print_die($str,$title = null){return false;};
+			function print_d($str,$title = null){return false;};
 			error_reporting(0);
 			ini_set('display_errors','off');
 			break;

@@ -2,7 +2,7 @@
 
 //This method is invoked each time a class is used which has not yet been define
 function __autoload($className){
-	
+
 	if ($className == 'View') {
 		$file = SERVER_ROOT_PRODUCT.'view/'.strtolower($className).EXE;
 	}
@@ -28,7 +28,7 @@ function __autoload($className){
 		require_once ($file);
 	}
 */
-	if (file_exists($file) && !class_exists($class_name)) {
+	if (file_exists($file) && !class_exists($className)) {
 		require_once ($file);
 	}
 	else {
@@ -41,11 +41,15 @@ $request = $_SERVER['QUERY_STRING'];
 
 //parse the page request and other GET variables
 $parsed = explode('&', $request);
-//var_dump($parsed);
-//echo '<br>';
+
 //page
 $product = array_shift($parsed);
 define('SERVER_ROOT_PRODUCT', SERVER_ROOT.$product.'/');
+if (!$product || !file_exists(SERVER_ROOT_PRODUCT)) {
+	//TODO: view login page rendered by template engine
+	include (SERVER_ROOT.'/common/view/login.php');
+	exit;
+}
 
 //include the RainTPL class
 include 'common/raintpl-master/inc/rain.tpl.class.php';
@@ -74,11 +78,13 @@ if (file_exists($target)){
 		$controller = new $class;
 	}
 	else {
-		die('no class - get the fuck out');
+		$m_path =& getClass('path','module');
+		die('no class - get the fuck out > '.$m_path->currentFile());
 	}
 }
 else{
-	die('no page - get the fuck out');
+	$m_path =& getClass('path','module');
+	die('no page - get the fuck out > '.$m_path->currentFile());
 }
 
 $controller->main($getVars);

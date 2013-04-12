@@ -266,9 +266,7 @@ class RainTPL{
 			$this->tpl['cache_filename']        = $temp_compiled_filename . '.s_' . $this->cache_id . '.rtpl.php';	// static cache filename
             $this->tpl['checked']               = true;
 
-            print_sl($tpl_name,'tpl_name');
-            print_sl(self::$cache_dir);
-           	print_vd($this->tpl);
+
 
 
 			// if the template doesn't exist and is not an external source throw an error
@@ -445,12 +443,6 @@ class RainTPL{
 
                     // reduce the path
                     $include_template = $this->reduce_path( $include_template );
-                    /*
-                    print_vd(self::$tpl_dir,'new0');
-                    print_vd($actual_folder,'new1');
-					print_vd($include_template,'new2');
-					print_die('what da');
-					*/
 					// if the cache is active
 					if( isset($code[ 2 ]) ){
 
@@ -673,7 +665,7 @@ class RainTPL{
 
 			if( in_array( "link", self::$path_replace_list ) ){
 				//TODO
-				//print_die($path,'link1');
+				//print_d($path,'link1');
 				$exp = array_merge( $exp , array( '/<link(.*?)href=(?:")(http|https)\:\/\/([^"]+?)(?:")/i', '/<link(.*?)href=(?:")([^"]+?)#(?:")/i', '/<link(.*?)href="(.*?)"/', '/<link(.*?)href=(?:\@)([^"]+?)(?:\@)/i' ) );
 				$sub = array_merge( $sub , array( '<link$1href=@$2://$3@', '<link$1href=@$2@' , '<link$1href="' . $path . '$2"', '<link$1href="$2"' ) );
 

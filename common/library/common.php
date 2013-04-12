@@ -3,7 +3,6 @@
 if (!function_exists('getClass')) {
 	
 	function &getClass($class,$directory = 'module'){
-
 		static $classes = array();
 		if ($directory == 'module') {
 			$class_name = 'M_'.$class;
