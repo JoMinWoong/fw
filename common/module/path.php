@@ -22,8 +22,15 @@ Class M_path {
 	 * @return current url
 	 */
 	public function currentURL() {
-		$query = $_SERVER['PHP_SELF'];
-		$path = pathinfo( $query );
-		return $path['basename'];
+		$pageURL = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
+		if ($_SERVER["SERVER_PORT"] != "80")
+		{
+		    $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+		} 
+		else 
+		{
+		    $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+		}
+		return $pageURL;
 	}
 }
