@@ -35,6 +35,5 @@ if (!function_exists('getClass')) {
 
 		$classes[$class_name] = new $class_name();
 		return $classes[$class_name];
-		
 	}
 }

@@ -12,9 +12,7 @@ Class M_path {
 	 * @return current file name
 	 */
 	public function currentFile() {
-		$query = $_SERVER['PHP_SELF'];
-		$path = pathinfo( $query );
-		return $path['basename'];
+		return basename(__FILE__);
 	}
 
 	/**

@@ -5,37 +5,23 @@
  * @param string $className
  */
 function __autoload($className){
-
-	list($filename,$suffix) = explode('_', $className);
-	
-	if ($suffix == 'View') {
-		$file = SERVER_ROOT_PRODUCT.'view/v_'.strtolower($filename).EXE;
+	if (strpos($className, '_') !== false) {
+		list($filename,$suffix) = explode('_', $className);
+		
+		if ($suffix == 'View') {
+			$file = SERVER_ROOT_PRODUCT.'view/v_'.strtolower($filename).EXE;
+		}
+		else if ($suffix == 'Model') {
+			$file = SERVER_ROOT_PRODUCT.'model/m_'.strtolower($filename).EXE;
+		}
+		else if ($suffix == 'Controller') {
+			$file = SERVER_ROOT_PRODUCT.'controller/c_'.strtolower($filename).EXE;
+		}
 	}
 	else if ($className == 'View') {
 		$file = SERVER_ROOT_PRODUCT.'view/'.strtolower($className).EXE;
 	}
-/*
-	list($filename,$suffix) = explode('_', $className);
 
-	if ($suffix == 'Model') {
-		$file = SERVER_ROOT_PRODUCT.'model/m_'.strtolower($filename).EXE;
-	}
-	elseif ($suffix == 'View') {
-		$file = SERVER_ROOT_PRODUCT.'view/v_'.strtolower($filename).EXE;
-	}
-	elseif ($className == 'View') {
-		$file = SERVER_ROOT_PRODUCT.'view/'.strtolower($filename).EXE;
-	}
-	elseif ($suffix == 'Controller') {
-		$file = SERVER_ROOT_PRODUCT.'controller/c_'.strtolower($filename).EXE;
-	}
-	else {
-		$file = SERVER_ROOT_PRODUCT.'common/'.strtolower($filename).EXE;
-	}
-	if (file_exists($file)) {
-		require_once ($file);
-	}
-*/
 	if (@file_exists($file) && !@class_exists($className)) {
 		require_once ($file);
 	}
@@ -54,15 +40,14 @@ $parsed = explode('&', $request);
 $product = array_shift($parsed);
 define('SERVER_ROOT_PRODUCT', SERVER_ROOT.$product.'/');
 if (!$product || !file_exists(SERVER_ROOT_PRODUCT)) {
-	//TODO: view login page rendered by template engine
-	include (SERVER_ROOT.'/common/view/login.php');
+	//TODO: display top page rendered by template engine
+	include (SERVER_ROOT.'/common/view/top.php');
 	exit;
 }
 
 //include the RainTPL class
 include 'common/raintpl-master/inc/rain.tpl.class.php';
 raintpl::configure('base_url', null );
-
 raintpl::configure('tpl_dir', SERVER_ROOT_PRODUCT.'view/tpl/' );
 raintpl::configure('cache_dir', SERVER_ROOT_PRODUCT.'view/tmp/' );
 

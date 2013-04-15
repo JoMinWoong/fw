@@ -9,8 +9,8 @@ if (defined('ENVIRONMENT')) {
 	
 	switch (ENVIRONMENT){//TODO cash off 
 		case 'development':
-			function print_sl($str,$title = null){echo '<br> ['.$title.' >> '.$str.' ]<br>';};
-			function print_vd($obj,$title = null){ $t = ($title)?$title:rand();echo '<br>-------------start< '.$t.' >------------<br>'; var_dump($obj); echo '<br>-------------end< '.$t.' >------------<br>';};
+			function print_sl($str,$title = null){echo '<br> ['	.$title.' >> '.$str.' ]<br>';};
+			function print_vd($obj,$title = null){ $t = ($title)?$title:rand();echo '<br>-------------start< '.$t.','.__FILE__.' : '.__LINE__.' >------------<br>'; var_dump($obj); echo '<br>-------------end< '.$t.' >------------<br>';};
 			function print_d($str,$title = null){echo '<br> ['.$title.' >die> '.$str.' ]';die();};
 			error_reporting(E_ALL);
 			ini_set('display_errors','on');
@@ -18,9 +18,9 @@ if (defined('ENVIRONMENT')) {
 		case 'getsysdata':
 			
 			//TODO : create array of library instances
-			function print_sl($str,$title = null){$m_log =& getClass('log','module'); };
-			function print_vd($obj,$title = null){$m_log =& getClass('log','module'); };
-			function print_d($str,$title = null){$m_log =& getClass('log','module'); };
+			function print_sl($str,$title = null){getClass('log','module')->general($str,$title); };
+			function print_vd($obj,$title = null){getClass('log','module')->general($obj,$title); };
+			function print_d($str,$title = null){getClass('log','module')->general($str,$title); };
 			error_reporting(E_ALL);
 			ini_set('display_errors','on');
 			break;
@@ -34,13 +34,4 @@ if (defined('ENVIRONMENT')) {
 	}
 }
 
-
-/*
-//include the RainTPL class
-include 'common/raintpl-master/inc/rain.tpl.class.php';
-
-raintpl::configure("base_url", null );
-raintpl::configure("tpl_dir", "common/raintpl-master/tpl/" );
-raintpl::configure("cache_dir", "common/raintpl-master/tmp/" );
-*/
 require_once (SERVER_ROOT.'/common/router.php');
